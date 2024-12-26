@@ -15,8 +15,9 @@ requires-python = ">=3.10"
 dependencies = [
     "mkdocs>=1.6.0",
     "natsort>=8.1.0",
-    "pydantic>=2.0.0",
-    "wcmatch>=8.4.0",
+    "pydantic>=2.0.2; python_version<'3.13'",
+    "pydantic>=2.8.1; python_version>='3.13'",
+    "wcmatch>=8.4",
 ]
 
 [project.urls]
@@ -32,9 +33,25 @@ build-backend = "flit_core.buildapi"
 [dependency-groups]
 dev = [
     "mypy>=1.14.0",
+    "pytest>=8.3.4",
     "ruff>=0.8.4",
+    "tox>=4.23.2",
+    "tox-gh>=1.4.4",
+    "tox-uv>=1.16.2",
     "types-pyyaml>=6.0.12.20241221",
+    "types-setuptools>=75.6.0.20241223",
+    # for compatibility tests
+    "mkdocs-exclude>=1.0.2",
+    "mkdocs-material>=9.2.6",
+    "mkdocs-monorepo-plugin>=1.1.0",
+    "mkdocs-multirepo-plugin>=0.8.2",
+    "mkdocs-static-i18n>=1.0.0",
+    "mktheapidocs>=0.2.0",
+    "mktheapidocs-test-module",
 ]
+
+[tool.uv.sources]
+mktheapidocs-test-module = { path = "tests/compatibility/mktheapidocs_test_module" }
 
 [tool.ruff]
 line-length = 120
