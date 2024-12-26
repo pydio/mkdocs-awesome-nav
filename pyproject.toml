@@ -25,3 +25,12 @@ awesome-nav = "mkdocs_awesome_nav.plugin:AwesomeNavPlugin"
 [build-system]
 requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.14.0",
+    "ruff>=0.8.4",
+]
+
+[tool.ruff]
+line-length = 120
