@@ -1,0 +1,9 @@
+sort:
+  sections: mixed
+
+nav:
+  - About:
+    - Getting Started: index.md
+    - philosophy.md
+    - migration-v3.md
+  - "*"

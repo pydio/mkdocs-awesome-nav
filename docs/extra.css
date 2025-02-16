@@ -1,0 +1,82 @@
+span {
+    &.reference-type, &.reference-default {
+        display: block;
+        margin-top: 4px;
+
+        &:first-of-type {
+            margin-top: 12px;
+        }
+
+        &::before {
+            display: inline-block;
+            width: 4em;
+        }
+    }
+
+    &.reference-type::before {
+        content: 'Type';
+    }
+
+    &.reference-default::before {
+        content: 'Default';
+    }
+}
+
+.tabbed-set {
+    .tabbed-labels code {
+        font-size: 1em;
+    }
+
+    .tabbed-block .md-typeset__table {
+        min-width: 100%;
+    }
+}
+
+.md-typeset .awesome-example {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1em 0;
+    --secondary-code-bg-color: color-mix(in srgb, var(--md-code-bg-color), var(--md-default-bg-color) 50%);
+
+    > * {
+        flex: 2;
+
+        &:first-child {
+            flex: 3;
+        }
+
+        &:not(:first-child) {
+            --md-code-bg-color: var(--secondary-code-bg-color);
+        }
+    }
+
+    > .highlight {
+        background: var(--md-code-bg-color);
+
+        > .filename {
+            margin-top: 0;
+        }
+
+        > pre {
+            margin-bottom: 0;
+        }
+    }
+
+    > ul {
+        font-size: 0.64rem;
+        background: var(--md-code-bg-color);
+        margin: 0;
+        padding: 0 0.8rem 0.55rem;
+
+        &::before {
+            content: 'Navigation';
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            margin: 0 -0.8rem 0.55rem;
+            padding: 0.45rem 0.8rem;
+            border-bottom: .05rem solid var(--md-default-fg-color--lightest);
+        }
+    }
+}
