@@ -5,7 +5,7 @@ on:
     tags:
       - v*.*.*
 env:
-  UV_VERSION: 0.5.12
+  UV_VERSION: 0.6.0
 
 jobs:
   publish:
