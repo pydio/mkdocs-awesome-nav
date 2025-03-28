@@ -77,3 +77,44 @@ def test_omitted_file(mkdocs, logs):
         )
         in logs.all
     )
+
+
+def test_append_unmatched(mkdocs):
+    mkdocs.docs(
+        """
+        foo.md
+        bar.md
+        .nav.yml
+        | append_unmatched: true
+        | nav:
+        |   - foo.md
+        """
+    )
+    mkdocs.build().assert_nav(
+        """
+        - Foo: foo.md
+        - Bar: bar.md
+        """
+    )
+
+
+def test_append_unmatched_inheritance(mkdocs):
+    mkdocs.docs(
+        """
+        foo/
+            foo.md
+            bar.md
+            .nav.yml
+            | nav:
+            |   - foo.md
+        .nav.yml
+        | append_unmatched: true
+        """
+    )
+    mkdocs.build().assert_nav(
+        """
+        - Foo:
+            - Foo: foo/foo.md
+            - Bar: foo/bar.md
+        """
+    )

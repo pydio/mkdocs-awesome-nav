@@ -196,6 +196,39 @@ def test_sort_direction_override(mkdocs):
     )
 
 
+def test_append_unmatched(mkdocs):
+    mkdocs.docs(
+        """
+        foo/
+            foo.md
+            bar.md
+            .nav.yml
+            | nav:
+            |   - foo.md
+        bar/
+            foo.md
+            bar.md
+            .nav.yml
+            | nav:
+            |   - foo.md
+        .nav.yml
+        | nav:
+        |   - foo
+        |   - glob: "*"
+        |     append_unmatched: true
+        """
+    )
+    mkdocs.build().assert_nav(
+        """
+        - Foo:
+            - Foo: foo/foo.md
+        - Bar:
+            - Foo: bar/foo.md
+            - Bar: bar/bar.md
+        """
+    )
+
+
 def test_no_matches(mkdocs, logs):
     mkdocs.docs(
         """

@@ -35,7 +35,10 @@ class NavConfig:
 
     @cached_property
     def nav(self) -> list[NavConfigItem]:
-        return self._model.nav
+        nav = self._model.nav.copy()
+        if self.append_unmatched:
+            nav.append(NavConfigItemPatternOptions(glob="*", ignore_no_matches=True))
+        return nav
 
     @cached_property
     def title(self) -> Optional[str]:
@@ -105,6 +108,16 @@ class NavConfig:
                 patterns.append(create_absolute_pattern(base_path, pattern))
 
         return patterns
+
+    @cached_property
+    def append_unmatched(self) -> bool:
+        return (
+            self._model.append_unmatched
+            if self._model.append_unmatched is not None
+            else self._parent.append_unmatched
+            if self._parent is not None
+            else False
+        )
 
     @staticmethod
     def from_file(file: File, parent: Optional[NavConfig] = None) -> NavConfig:
@@ -180,6 +193,7 @@ class NavConfigItemPatternOptions(BaseModel):
     preserve_directory_names: Optional[bool] = None
     sort: SortConfig = SortConfig()
     ignore: IgnoreConfig = IgnoreConfig()
+    append_unmatched: Optional[bool] = None
     ignore_no_matches: bool = False
 
     def parse(self, *, path: PurePosixPath, context: MkdocsFilesContext, config: NavConfig):
@@ -191,6 +205,7 @@ class NavConfigItemPatternOptions(BaseModel):
                 flatten_single_child_sections=self.flatten_single_child_sections,
                 preserve_directory_names=self.preserve_directory_names,
                 ignore=self.ignore,
+                append_unmatched=self.append_unmatched,
             ),
             directory_path=path,
             config_path=config.config_path,
@@ -214,6 +229,7 @@ class ConfigModel(BaseModel):
         NavConfigItemPatternOptions(glob="@(index.md|README.md)", ignore_no_matches=True),
         NavConfigItemPatternOptions(glob="*", ignore_no_matches=True),
     ]
+    append_unmatched: Optional[bool] = None
 
     @staticmethod
     def from_yaml(contents: str) -> ConfigModel:

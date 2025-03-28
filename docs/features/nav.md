@@ -413,6 +413,7 @@ These are all the available options:
 | `flatten_single_child_sections` | For sections with a single child, show the child instead of the section. [Read more :material-arrow-right:](flattening.md#single-child)                                                                                            |
 | `ignore`                        | Everything that matches this glob pattern is hidden. [Read more :material-arrow-right:](hiding.md#ignore-patterns)                                                                                            |
 | `sort`                          | All the regular sorting options. [Read more :material-arrow-right:](sorting.md)                                                                                            |
+| `append_unmatched`              | Add unmatched files at the end. This applies to child directories, not the pattern itself. [Read more :material-arrow-right:](nav.md#unmatched-files)                                                                                            |
 ///
 
 /// tab | Example
@@ -466,3 +467,75 @@ nav:
   - Full Url: https://lukasgeiter.github.io/mkdocs-awesome-nav
   - Relative Path: ../
 ```
+
+## Unmatched Files
+
+Files and directories that are not referenced by your `nav` configuration will not be included in the navigation. If this happens, MkDocs prints an info message listing the files:
+
+```
+INFO    -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
+             - support.md
+```
+
+!!! info "Hidden pages"
+    Unmatched pages are still built and accessible by going to their url. Use the [`exclude_docs` option from MkDocs](https://www.mkdocs.org/user-guide/configuration/#exclude_docs){:target="_blank"} to completely exclude files.
+
+If you'd like the file to be included, either add a [page entry](#pages) or a [glob pattern](#glob-patterns) that matches it.
+
+Alternatively, you may turn on `append_unmatched` to automatically add unmatched files and directories at the end of your `nav`. This is equivalent to adding a `*` glob pattern at the end. In the following example, `support.md` is omitted from `nav`:
+
+/// tab | `true`
+<div class="awesome-example" markdown>
+```yaml title=".nav.yml"
+append_unmatched: true
+nav:
+  - getting-started.md
+  - guides
+```
+
+```title="File Structure"
+docs/
+├─ .nav.yml
+├─ getting-started.md
+├─ support.md
+└─ guides/
+   ├─ authentication.md
+   └─ error-handling.md
+```
+
+- Getting started
+- Guides
+    - Authentication
+    - Error handling
+- Support
+</div>
+///
+
+/// tab | `false` (default)
+<div class="awesome-example" markdown>
+```yaml title=".nav.yml"
+append_unmatched: false
+nav:
+  - getting-started.md
+  - guides
+```
+
+```title="File Structure"
+docs/
+├─ .nav.yml
+├─ getting-started.md
+├─ support.md
+└─ guides/
+   ├─ authentication.md
+   └─ error-handling.md
+```
+
+- Getting started
+- Guides
+    - Authentication
+    - Error handling
+</div>
+///
+
+??? tip "Child directories inherit this setting"
+    `append_unmatched` applies to all child directories as well, unless it's overridden by a `.nav.yml` there.

@@ -336,3 +336,54 @@ def test_sections(mkdocs):
             - Support: support.md
         """
     )
+
+
+def test_append_unmatched_true(mkdocs):
+    mkdocs.docs(
+        """
+        getting-started.md
+        support.md
+        guides/
+            authentication.md
+            error-handling.md
+        .nav.yml
+        | append_unmatched: true
+        | nav:
+        |   - getting-started.md
+        |   - guides
+        """
+    )
+    mkdocs.build().assert_nav(
+        """
+        - Getting started: getting-started.md
+        - Guides:
+            - Authentication: guides/authentication.md
+            - Error handling: guides/error-handling.md
+        - Support: support.md
+        """
+    )
+
+
+def test_append_unmatched_false(mkdocs):
+    mkdocs.docs(
+        """
+        getting-started.md
+        support.md
+        guides/
+            authentication.md
+            error-handling.md
+        .nav.yml
+        | append_unmatched: false
+        | nav:
+        |   - getting-started.md
+        |   - guides
+        """
+    )
+    mkdocs.build().assert_nav(
+        """
+        - Getting started: getting-started.md
+        - Guides:
+            - Authentication: guides/authentication.md
+            - Error handling: guides/error-handling.md
+        """
+    )

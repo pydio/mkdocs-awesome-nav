@@ -272,6 +272,15 @@ def test_nav_item_arbitrary_dict(_test_validation_error):
     assert "Dictionary should have at most 1 item after validation, not 2" in error
 
 
+def test_append_unmatched(_test_validation_error):
+    error = _test_validation_error(
+        """
+        append_unmatched: foo
+        """
+    )
+    assert "Input should be a valid boolean" in error
+
+
 def test_invalid_yml(mkdocs, logs):
     mkdocs.docs(
         """
