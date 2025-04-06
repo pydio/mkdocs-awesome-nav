@@ -70,7 +70,7 @@ class NavPattern:
             key = self._sort_key_by_title
 
         if self.config.sort.type == "natural":
-            natsort_flags = ns.GROUPLETTERS | ns.FLOAT
+            natsort_flags = ns.GROUPLETTERS | ns.INT
             if self.config.sort.by != "title":
                 natsort_flags |= ns.PATH
             if self.config.sort.ignore_case:

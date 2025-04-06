@@ -33,6 +33,12 @@ def _test_files(mkdocs):
         | Title: b
         b-lower-suffix.md
         | Title: b suffix
+        c.2.md
+        | Title: c.2
+        c.2.5.md
+        | Title: c.2.5
+        c.10.md
+        | Title: c.10
         """
     )
 
@@ -54,6 +60,9 @@ def test_default(mkdocs):
         - "B suffix": B-upper-suffix.md
         - "b": b-lower.md
         - "b suffix": b-lower-suffix.md
+        - "c.2": c.2.md
+        - "c.2.5": c.2.5.md
+        - "c.10": c.10.md
         """
     )
 
@@ -82,6 +91,9 @@ def test_default_title(mkdocs):
         - "B suffix": B-upper-suffix.md
         - "b": b-lower.md
         - "b suffix": b-lower-suffix.md
+        - "c.2": c.2.md
+        - "c.2.5": c.2.5.md
+        - "c.10": c.10.md
         """
     )
 
@@ -110,6 +122,9 @@ def test_natural(mkdocs):
         - "B suffix": B-upper-suffix.md
         - "b": b-lower.md
         - "b suffix": b-lower-suffix.md
+        - "c.2": c.2.md
+        - "c.2.5": c.2.5.md
+        - "c.10": c.10.md
         """
     )
 
@@ -139,6 +154,9 @@ def test_natural_title(mkdocs):
         - "B suffix": B-upper-suffix.md
         - "b": b-lower.md
         - "b suffix": b-lower-suffix.md
+        - "c.2": c.2.md
+        - "c.2.5": c.2.5.md
+        - "c.10": c.10.md
         """
     )
 
@@ -167,6 +185,9 @@ def test_alphabetical(mkdocs):
         - "a": a-lower.md
         - "b suffix": b-lower-suffix.md
         - "b": b-lower.md
+        - "c.10": c.10.md
+        - "c.2.5": c.2.5.md
+        - "c.2": c.2.md
         """
     )
 
@@ -196,5 +217,8 @@ def test_alphabetical_title(mkdocs):
         - "a suffix": a-lower-suffix.md
         - "b": b-lower.md
         - "b suffix": b-lower-suffix.md
+        - "c.10": c.10.md
+        - "c.2": c.2.md
+        - "c.2.5": c.2.5.md
         """
     )
