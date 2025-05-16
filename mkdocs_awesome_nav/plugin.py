@@ -16,7 +16,7 @@ class AwesomeNavConfig(Config):
     filename = config_options.Type(str, default=".nav.yaml")
 
 
-class AwesomeSlugNavPlugin(BasePlugin[AwesomeNavConfig]):
+class AwesomeNavPlugin(BasePlugin[AwesomeNavConfig]):
     @event_priority(100)
     def on_nav(self, nav, config, files):
         for item in nav.items:
