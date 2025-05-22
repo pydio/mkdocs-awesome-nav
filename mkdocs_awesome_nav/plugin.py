@@ -73,9 +73,18 @@ class AwesomeNavPlugin(BasePlugin[AwesomeNavConfig]):
     def on_page_context(self, context, page, config, nav, **kwargs):
         file_path = os.path.join(config.docs_dir, page.file.src_path)
         slug_parts = self._build_slug_path(file_path, config)
-        slug_url = '/'.join(slug_parts) + '/'
-        dest_path = os.path.join(*slug_parts, 'index.html')
 
+        # slug_url = '/'.join(slug_parts) + '/'
+        # dest_path = os.path.join(*slug_parts, 'index.html')
+# Check if the source file is index.md
+        if os.path.basename(file_path) == 'index.md':
+            # For index.md, use the directory path without appending 'index'
+            dest_path = os.path.join(*slug_parts, 'index.html')
+        else:
+            # For other files, keep the existing behavior
+            dest_path = os.path.join(*slug_parts, 'index.html')
+            slug_url = '/'.join(slug_parts) + '/'
+            
         page.file.dest_path = dest_path
         page.file.abs_dest_path = os.path.join(config.site_dir, dest_path)
 
