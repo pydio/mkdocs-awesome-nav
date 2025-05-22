@@ -76,7 +76,8 @@ class AwesomeNavPlugin(BasePlugin[AwesomeNavConfig]):
 
         # slug_url = '/'.join(slug_parts) + '/'
         # dest_path = os.path.join(*slug_parts, 'index.html')
-# Check if the source file is index.md
+        
+        # Check if the source file is index.md
         if os.path.basename(file_path) == 'index.md':
             # For index.md, use the directory path without appending 'index'
             dest_path = os.path.join(*slug_parts, 'index.html')
@@ -93,7 +94,13 @@ class AwesomeNavPlugin(BasePlugin[AwesomeNavConfig]):
     def on_pre_page(self, page, config, files):
         file_path = os.path.join(config.docs_dir, page.file.src_path)
         slug_parts = self._build_slug_path(file_path, config)
-        slug_url = '/'.join(slug_parts) + '/'
+        
+        # slug_url = '/'.join(slug_parts) + '/'
+        # For index.md, use directory path without appending 'index'
+        if os.path.basename(file_path) == 'index.md':
+            slug_url = '/'.join(slug_parts) + '/'
+        else:
+            slug_url = '/'.join(slug_parts) + '/'
 
         # override early enough for sitemap
         page.canonical_url = config.site_url.rstrip('/') + '/' + slug_url if config.site_url else '/' + slug_url
